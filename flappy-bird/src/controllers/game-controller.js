@@ -37,7 +37,7 @@ export class GameController {
         this.gameBrain.gameOver = true;
         clearInterval(this.gameInterval);
         let name = prompt("Game over! Enter your name:")
-        if (name === null) {
+        if (name === null || name === "") {
             name = "Player";
         }
         this.gameBrain.addNewScore(name);
