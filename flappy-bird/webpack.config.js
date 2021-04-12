@@ -10,8 +10,7 @@ module.exports = {
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/index.html",
-            inject: "body",
-            minify: false
+            inject: "body"
         })
     ]
 }

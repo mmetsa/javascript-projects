@@ -15,16 +15,27 @@ class Pipe {
     }
 }
 
-const PIPE_GAP = 30;
+const PIPE_GAP = 50;
 
 export class GameBrain {
     constructor() {
         this.scoreBoard = [];  // list of GameScore
         this.gameBoard = []; // list of Pipe
         this.counter = 0;
+        this.gameStarted = false;
+        this.gameOver = false;
+        this.gameScore = new GameScore();
+    }
+
+    addNewScore(name) {
+        this.gameScore.name = name;
+        this.scoreBoard.push(this.gameScore);
+        this.gameScore = new GameScore();
+        console.log(this.scoreBoard)
     }
 
     createBoard() {
+        this.gameBoard = [];
         this.gameBoard.push(this.createPipe(this.counter))
     }
 
@@ -34,7 +45,6 @@ export class GameBrain {
     }
 
     createPipe(id) {
-        console.log(id)
         let upperHeight = Math.random() * (100 - PIPE_GAP)
         let lowerHeight = 100 - PIPE_GAP - upperHeight;
         id = "pipe-" + id;

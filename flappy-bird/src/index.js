@@ -2,6 +2,7 @@ import {HiscoresView} from './views/hiscores.js';
 import {GameView} from './views/gameview.js';
 import {GameBrain} from './model/gamebrain.js';
 import {GameController} from './controllers/game-controller.js'
+import _ from 'lodash';
 
 let hiscores = new HiscoresView();
 let gameview = new GameView();
