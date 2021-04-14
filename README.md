@@ -1,3 +1,7 @@
-# icd0006-2020s
+# Flappy bird game in Vanilla JS
 
-Maiko Metsalu - IADB185064 - mmetsa
+## This was a mandatory task in my university course ICD0006-Javascript
+
+When making this project, I learned DOM manipulation: creating, removing elements.
+
+The code is split into the MVC pattern. Some improvements could be made.
