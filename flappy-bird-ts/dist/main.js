@@ -1,0 +1,1 @@
+(()=>{"use strict";function o(o,r){return(o+r).toString()}console.log("Test from TS");for(var r="5",n=0;n<10;n++)r=o(10,n),console.log(r);for(n=20;n<30;n++)r=o(10,n),console.log(r)})();

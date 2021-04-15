@@ -62,9 +62,6 @@ export class GameController {
                 this.gameOver();
             }
         })
-        //if (this.overlaps(bird, upperPipe) || this.overlaps(bird, lowerPipe) || bird.getBoundingClientRect().y + bird.getBoundingClientRect().height > parseFloat(document.body.querySelector("#game").style.height)) {
-        //    this.gameOver();
-        //}
     }
 
     overlaps(a, b) {
