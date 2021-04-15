@@ -1,7 +1,11 @@
-# Flappy bird game in Vanilla JS
+# Flappy bird game in Vanilla JS and Typescript
 
-## This was a mandatory task in my university course ICD0006-Javascript
+## Maiko Metsalu - IADB185064
+
+## This is a mandatory task in my university course ICD0006-Javascript
 
 When making this project, I learned DOM manipulation: creating, removing elements.
 
-The code is split into the MVC pattern. Some improvements could be made.
+The code is split into the MVC pattern.
+
+This
