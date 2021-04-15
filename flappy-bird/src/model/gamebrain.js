@@ -57,7 +57,7 @@ export class GameBrain {
             pipe.xCoord += 1;
         });
         this.gameBoard.forEach(pipe => {
-            if(pipe.xCoord > 2000) {
+            if(pipe.xCoord > 10000) {
                 this.gameBoard.shift();
             }
         })

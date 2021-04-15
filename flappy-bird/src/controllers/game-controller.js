@@ -1,9 +1,8 @@
 export class GameController {
 
-    constructor(gameBrain, gameView, hiscoresView) {
+    constructor(gameBrain, gameView) {
         this.gameBrain = gameBrain;
         this.gameView = gameView;
-        this.hiscoresView = hiscoresView;
         this.gameInterval = 0;
 
     }
@@ -55,11 +54,17 @@ export class GameController {
 
     checkCollision() {
         let bird = document.body.querySelector("#bird");
+        let pipes = document.body.querySelectorAll(".pipe");
         let upperPipe = bird.previousElementSibling.firstElementChild;
         let lowerPipe = bird.previousElementSibling.firstElementChild.nextElementSibling.nextElementSibling;
-        if (this.overlaps(bird, upperPipe) || this.overlaps(bird, lowerPipe) || bird.getBoundingClientRect().y + bird.getBoundingClientRect().height > parseFloat(document.body.querySelector("#game").style.height)) {
-            this.gameOver();
-        }
+        pipes.forEach(pipe => {
+            if (this.overlaps(bird, pipe.firstElementChild) || this.overlaps(bird, pipe.firstElementChild.nextElementSibling.nextElementSibling) || bird.getBoundingClientRect().y + bird.getBoundingClientRect().height > parseFloat(document.body.querySelector("#game").style.height)) {
+                this.gameOver();
+            }
+        })
+        //if (this.overlaps(bird, upperPipe) || this.overlaps(bird, lowerPipe) || bird.getBoundingClientRect().y + bird.getBoundingClientRect().height > parseFloat(document.body.querySelector("#game").style.height)) {
+        //    this.gameOver();
+        //}
     }
 
     overlaps(a, b) {

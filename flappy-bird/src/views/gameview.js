@@ -1,15 +1,5 @@
-
 const PIPE_WIDTH = window.innerWidth / 15;
 
-/*export function gameView() {
-    let content = document.createElement("div");
-    content.id = "content"
-    content.style.maxHeight = window.innerHeight + "px";
-    content.style.maxWidth = window.innerWidth + "px";
-    content.style.position = "relative";
-    content.append(createBird());
-    return content;
-}*/
 export class GameView {
     constructor() {
         this.drawGame();
@@ -58,19 +48,13 @@ export class GameView {
         let rect = bird.getBoundingClientRect();
         bird.style.transition = "top 0.3s";
         bird.dataset.top -= rect.height * 4;
-        bird.dataset.goingup = true;
         bird.style.top = bird.dataset.top + "px";
-        bird.addEventListener("transitionend", function() {
-            bird.dataset.goingup = false;
-        });
     }
 
     birdFall() {
         let bird = document.querySelector("#bird");
-        if(bird.dataset.goingup !== "true") {
-            bird.dataset.top = Number(bird.dataset.top) + 3;
-            bird.style.top = bird.dataset.top + "px";
-        }
+        bird.dataset.top = Number(bird.dataset.top) + 3;
+        bird.style.top = bird.dataset.top + "px";
     }
 
     drawBoard(gameBoard) {
@@ -94,7 +78,6 @@ const BIRD_WIDTH = 95;
 
 function createBird() {
     let bird = document.createElement("div");
-    //bird.innerHTML = "BIRD";
     bird.id = "bird"
     let birdimg = document.createElement("img");
     birdimg.src = "./src/bird-flying.gif";
@@ -148,39 +131,3 @@ function createPipe(pipe) {
 
     return elemPipe;
 }
-
-/*function createPipe(pipeId, width) {
-
-    let topHeight = Math.random() * (window.innerHeight - PIPE_GAP);
-    let bottomHeight = window.innerHeight - topHeight - PIPE_GAP;
-
-    let upperPipe = document.createElement("div")
-    let gap = document.createElement("div")
-    let lowerPipe = document.createElement("div")
-
-    let pipe = document.createElement("div");
-    pipe.append(upperPipe);
-    pipe.append(gap)
-    pipe.append(lowerPipe);
-
-    upperPipe.classList.add("pipe-" + pipeId)
-    gap.classList.add("gap-" + pipeId)
-    lowerPipe.classList.add("pipe-" + pipeId)
-    pipe.id = pipeId;
-
-    upperPipe.style.backgroundColor = "black";
-    lowerPipe.style.backgroundColor = "blue";
-    upperPipe.style.width = width + "px";
-    upperPipe.style.height = topHeight + "px";
-    lowerPipe.style.width = width + "px";
-    lowerPipe.style.height = bottomHeight + "px";
-    gap.style.width = width + "px";
-    gap.style.height = PIPE_GAP + "px";
-    
-    pipe.style.height = window.innerHeight + "px";
-    pipe.style.maxWidth = width + "px";
-    pipe.style.display = "inline-block";
-    pipe.style.position = "absolute";
-
-    return pipe;
-}*/
