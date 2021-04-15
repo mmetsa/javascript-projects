@@ -7,5 +7,3 @@
 When making this project, I learned DOM manipulation: creating, removing elements.
 
 The code is split into the MVC pattern.
-
-This
