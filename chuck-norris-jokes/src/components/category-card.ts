@@ -5,7 +5,12 @@ export class CategoryCard {
 
     @bindable private viewName: string;
 
-    constructor() {
+    constructor(@IRouter private router: IRouter) {
 
+    }
+
+    async loadView() {
+        console.log(this.viewName);
+        await this.router.load('/' + this.viewName);
     }
 }
