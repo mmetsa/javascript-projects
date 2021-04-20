@@ -1,0 +1,44 @@
+@font-face {
+    font-family: CherryLime;
+    src: url('CHERRY\ LIME.ttf');
+}
+
+h1 {
+    font-family: CherryLime, sans-serif;
+    font-size: 4em;
+}
+
+h2 {
+    font-family: CherryLime, sans-serif;
+    font-size: 2em;
+}
+
+.Celebrity {
+    background: url('celeb.png');
+    background-size: cover;
+    height: 3em;
+    width: 3em;
+    display: block;
+}
+
+.Money {
+    background: url('money.png');
+    background-size: cover;
+    min-width: 1em;
+    min-height: 1em;
+    height: 3em;
+    width: 3em;
+    display: block;
+}
+
+.Travel {
+    background: url('travel.png');
+    background-size: cover;
+    height: 3rem;
+    width: 3rem;
+    display: block;
+}
+
+.category_card {
+    margin: 1em;
+}
