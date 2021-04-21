@@ -1,1 +1,13 @@
-Hello!egal
+<import from="../components/joke-card"></import>
+<div class="d-flex justify-content-center">
+    <h1>Here are some Celebrity jokes for you!</h1>
+</div>
+<br>
+<div class="d-flex justify-content-center">
+    <h2>New jokes</h2>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="d-flex flex-column col-lg-6 col-xs-6">
+        <joke-card if.bind="loaded" class="mt-4" repeat.for="joke of appState.getJokes('celebrity')" joke-heading.bind="appState.getJokes('celebrity')[$index].id"  joke-text.bind="appState.getJokes('celebrity')[$index].value"></joke-card>
+    </div>
+</div>

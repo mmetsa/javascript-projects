@@ -1,4 +1,5 @@
 import { IRouter } from "@aurelia/router";
+import { IJoke } from "./domain/IJoke";
 import { AppState } from "./state/app-state";
 
 export class MyApp {
@@ -14,6 +15,5 @@ export class MyApp {
   detached() {
     
   }
-
   
 }
