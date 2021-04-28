@@ -13,8 +13,19 @@ export class AppState {
     }
     
     addJokes(jokes: IJoke[], category: string): void {
-        console.log(this);
-        this.jokes.set(category, [...jokes, ...this.jokes.get(category)]);
+        var added: boolean = false;
+        for(let joke of jokes) {
+            for(let seenJoke of this.jokes.get(category)) {
+                if (joke.id == seenJoke.id) {
+                    added = true;
+                    break;
+                }
+            }
+            if(!added) {
+                this.jokes.set(category, [joke, ...this.jokes.get(category)])
+                added = false;
+            }
+        }
     }
 
     getJokes(category: string): IJoke[] {
