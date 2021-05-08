@@ -1,0 +1,44 @@
+<h1>Edit</h1>
+<h4>GasStation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input value.bind="data.name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Latitude</label>
+                <input value.bind="data.latitude" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Longitude</label>
+                <input value.bind="data.longitude" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Address</label>
+                <input value.bind="data.address" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">openHours</label>
+                <input value.bind="data.openHours" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Retailer id</label>
+                <select value.bind="data.retailerId" class="form-control">
+                    <option model.bind="null">Choose Retailer</option>
+                    <option repeat.for="retailer of retailers" model.bind="retailer.id">${retailer.name}</option>
+                </select>
+            </div>
+            <input type="hidden" for="Id" value.bind="data.id" />
+            <div class="form-group">
+                <input type="submit" click.delegate="edit($event)" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a>Back to List</a>
+</div>

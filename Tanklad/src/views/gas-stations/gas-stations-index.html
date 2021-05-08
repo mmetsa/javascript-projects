@@ -1,0 +1,27 @@
+<h1>Gas Stations</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Lat</th>
+            <th>Long</th>
+            <th>Address</th>
+            <th>openHours</th>
+            <th>Retailer Id</th>
+        </tr>
+    </thead>
+    <tr repeat.for="item of data">
+        <td>${item.id}</td>
+        <td>${item.name}</td>
+        <td>${item.latitude}</td>
+        <td>${item.longitude}</td>
+        <td>${item.address}</td>
+        <td>${item.openHours}</td>
+        <td>${item.retailerId}</td>
+        <td if.bind="isAdmin()"><a load="/gas-stations-edit(${item.id})">Edit</a></td>
+        <td><a load="/gas-stations-detail(${item.id})">Details</a></td>
+        <td><a load="/gas-stations-detail(${item.id})">Delete</a></td>
+    </tr>
+</table>

@@ -1,0 +1,44 @@
+<div class="container">
+    <main role="main" class="pb-3">
+        
+<h1>Register</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <h4>Create a new account.</h4>
+            <hr>
+            <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+            <div class="form-group">
+                <label for="Input_FirstName">First name</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The First name must be at least 1 and at max 50 characters long." data-val-length-max="50" data-val-length-min="1" data-val-required="The First name field is required." id="Input_FirstName" maxlength="50" name="Input.FirstName" value.bind="firstname">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.FirstName" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_LastName">Last name</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The Last name must be at least 1 and at max 100 characters long." data-val-length-max="100" data-val-length-min="1" data-val-required="The Last name field is required." id="Input_LastName" maxlength="100" name="Input.LastName" value.bind="lastname">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.LastName" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_Email">Email</label>
+                <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" value.bind="email">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_Password">Password</label>
+                <input class="form-control" type="password" data-val="true" data-val-length="The Password must be at least 6 and at max 100 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Input_Password" maxlength="100" name="Input.Password" value.bind="password">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Input_ConfirmPassword">Confirm password</label>
+                <input class="form-control" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" data-val-required="The Confirm password field is required." id="Input_ConfirmPassword" name="Input.ConfirmPassword">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Input.ConfirmPassword" data-valmsg-replace="true"></span>
+            </div>
+            <button method="post" click.delegate="registerClicked($event)" class="btn btn-primary">Register</button>
+   </div>
+</div>
+
+
+    </main>
+</div>

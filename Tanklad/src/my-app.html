@@ -1,0 +1,45 @@
+<import from="./views/home/home-index.html"/>
+<import from="./views/user/identity-login"/>
+<import from="./views/user/identity-register"/>
+<import from="./views/gas-stations/gas-stations-router.html"></import>
+<import from="./views/gas-stations/gas-stations-index"></import>
+<import from="./views/gas-stations/gas-stations-detail"></import>
+<import from="./views/gas-stations/gas-stations-edit"></import>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <a class="navbar-brand" href="#">TANKLAD.EE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#" load="home-index">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#" load="gas-stations-index">Gas Stations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li show.bind="state.token == null" class="nav-item active">
+          <a class="nav-link" href="" load="identity-register">Register</a>
+      </li>
+      <li show.bind="state.token == null" class="nav-item active">
+          <a class="nav-link" href="" load="identity-login">Login</a>
+      </li>
+      <li show.bind="state.token != null" class="nav-item active">
+        <a class="nav-link" href="">${state.firstname} ${state.lastname}</a>
+      </li>
+      <li show.bind="state.token != null" class="nav-item active">
+        <a class="nav-link" click.delegate="logOut($event)">Log out</a>
+    </li>
+</ul>
+  </div>
+</nav>
+  
+  <main class="container">
+    <au-viewport default="home-index"></au-viewport>
+  </main>
