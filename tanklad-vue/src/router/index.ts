@@ -4,6 +4,7 @@ import Login from "../views/identity/Login.vue";
 import Register from "../views/identity/Register.vue";
 import GasStations from "../views/GasStations.vue";
 import Map from "../views/Map.vue";
+import Profile from "../views/identity/Profile.vue";
 import Favorites from "../views/Favorites.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -45,6 +46,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/map",
         name: "map",
         component: Map
+    },
+    {
+        path: "/identity/profile",
+        name: "identity-profile",
+        component: Profile
     }
 ];
 

@@ -38,7 +38,7 @@ export default createStore({
                 loginData,
                 {
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
                     }
                 }
             );
@@ -51,7 +51,8 @@ export default createStore({
                 "https://localhost:5001/api/v1/gasstation/",
                 {
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + this.state.token
                     }
                 }
             );

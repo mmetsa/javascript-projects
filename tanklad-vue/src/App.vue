@@ -35,9 +35,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li v-if="token == null" class="nav-item">
-                    <router-link class="nav-link" to="/identity/register"
-                        >Register</router-link
-                    >
+                    <router-link class="nav-link" to="/identity/register">Register</router-link>
                 </li>
                 <li v-if="token == null" class="nav-item">
                     <router-link class="nav-link" to="/identity/login"
@@ -45,7 +43,7 @@
                     >
                 </li>
                 <li v-if="token != null" class="nav-item">
-                    <span class="nav-link text-light">{{firstname}} {{lastname}}</span>
+                    <router-link class="nav-link" to="/identity/profile">{{firstname}} {{lastname}}</router-link>
                 </li>
                 <li v-if="token != null" class="nav-item">
                     <a href="#" class="nav-link" @click="logOut()">Log out</a>

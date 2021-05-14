@@ -16,7 +16,6 @@ import { IGasStation } from "@/domain/IGasStation";
 })
 export default class GasStations extends Vue {
     mounted(): void {
-        console.log("I mounted");
         store.dispatch('loadGasStations');
         console.log(store.state.gasstations)
     }
