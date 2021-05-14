@@ -22,6 +22,10 @@
         <td>${item.retailerId}</td>
         <td if.bind="isAdmin()"><a load="/gas-stations-edit(${item.id})">Edit</a></td>
         <td><a load="/gas-stations-detail(${item.id})">Details</a></td>
-        <td><a load="/gas-stations-detail(${item.id})">Delete</a></td>
+        <td if.bind="isAdmin()"><a load="/gas-stations-detail(${item.id},${true})">Delete</a></td>
     </tr>
 </table>
+<br>
+<div class="container">
+    <a load="/gas-stations-edit"><button class="btn btn-primary">Create New</button></a>
+</div>

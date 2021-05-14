@@ -94,7 +94,7 @@ export class BaseService<TEntity> {
         try {
             const response = await this.httpClient.put(
                 url, 
-                body,
+                JSON.stringify(body),
                 {
                     cache: "no-store",
                      headers: this.authHeaders
@@ -106,7 +106,73 @@ export class BaseService<TEntity> {
                     data: data
                 };
             }
-            
+            return {
+                statusCode: response.status,
+                errorMessage: response.statusText
+            }
+        } catch (reason) {
+            return {
+                statusCode: 0,
+                errorMessage: JSON.stringify(reason)
+            }
+        }
+    }
+
+    async delete(id: string, body?: any, queryParameters?: IQueryParams) : Promise<IFetchResponse<TEntity>> {
+        let url = this.apiEndpointUrl;
+        url = url + "/" + id;
+        if(queryParameters !== undefined) {
+            // TODO: add Query params to url
+        }
+
+        try {
+            const response = await this.httpClient.delete(
+                url,
+                JSON.stringify(body),
+                {
+                    cache: "no-store",
+                     headers: this.authHeaders
+                });
+            if (response.ok) {
+                const data = (await response.json()) as TEntity;
+                return {
+                    statusCode: response.status,
+                    data: data
+                };
+            }
+            return {
+                statusCode: response.status,
+                errorMessage: response.statusText
+            }
+        } catch (reason) {
+            return {
+                statusCode: 0,
+                errorMessage: JSON.stringify(reason)
+            }
+        }
+    }
+
+    async post(body?: any, queryParameters?: IQueryParams) : Promise<IFetchResponse<TEntity>> {
+        let url = this.apiEndpointUrl;
+        if(queryParameters !== undefined) {
+            // TODO: add Query params to url
+        }
+
+        try {
+            const response = await this.httpClient.post(
+                url,
+                JSON.stringify(body),
+                {
+                    cache: "no-store",
+                     headers: this.authHeaders
+                });
+            if (response.ok) {
+                const data = (await response.json()) as TEntity;
+                return {
+                    statusCode: response.status,
+                    data: data
+                };
+            }
             return {
                 statusCode: response.status,
                 errorMessage: response.statusText

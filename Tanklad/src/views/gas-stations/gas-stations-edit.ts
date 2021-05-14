@@ -1,4 +1,4 @@
-import { HttpClient, IRouteViewModel } from "aurelia";
+import { HttpClient, IRouter, IRouteViewModel } from "aurelia";
 import { IGasStation } from "../../domain/IGasStation";
 import { IRetailer } from "../../domain/IRetailer";
 import { BaseService } from "../../services/base-service";
@@ -11,8 +11,9 @@ export class GasStationsEdit implements IRouteViewModel {
 
     private data: IGasStation;
     private retailers: IRetailer[];
+    private id: string;
 
-    constructor(protected httpClient: HttpClient, private state: AppState) {
+    constructor(@IRouter private router: IRouter, protected httpClient: HttpClient, private state: AppState) {
     }
 
     async attached() {
@@ -21,11 +22,21 @@ export class GasStationsEdit implements IRouteViewModel {
 
     async edit(event: Event) {
         event.preventDefault();
-        this.service.edit(this.data.id, this.data)
+        let response = await this.service.edit(this.data.id, this.data)
+        await this.router.load("/gas-stations-index");
+
+    }
+
+    async create(event: Event) {
+        event.preventDefault();
+        let response = await this.service.post(this.data)
+        await this.router.load("/gas-stations-index");
+
     }
 
     async load(parameters) {
         console.log("load");
+        this.id = parameters[0];
         let response = await this.retailerService.getAll()
         if (response.data) {
             this.retailers = response.data;
