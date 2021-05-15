@@ -1,3 +1,5 @@
+import { IFuelType } from "./IFuelType";
+
 export interface IGasStation {
     id: string;
     name: string;
@@ -6,4 +8,5 @@ export interface IGasStation {
     address?: string;
     openhours?: string;
     retailerId: string;
+    fuelTypes: IFuelType[];
 }

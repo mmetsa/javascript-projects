@@ -1,0 +1,57 @@
+<template>
+    <div class="card h-100 gasstation-card">
+        <div class="card-body row">
+            <div class="h-85 col-4">
+                <img v-if="gasStation.name.includes('Alexela')" class="logo" src="https://seeklogo.com/images/A/alexela-logo-D0EC116C33-seeklogo.com.png"/>
+                <img v-if="gasStation.name.includes('Olerex')" class="logo" src="https://ehl.org.ee/wp-content/uploads/2018/10/Olerex-logo.jpg"/>
+                <p class="card-text d-none d-sm-block">
+                    <small class="text-muted">Last updated today</small>
+                </p>
+            </div>
+            <div class="h-100 col-8">
+                <h5 class="row card-title justify-content-center">
+                    {{ gasStation.name.toUpperCase() }}
+                </h5>
+                <div class="row" v-for="(item, index) in gasStation.fuelTypes" :key="index">
+                    <p class="row card-text justify-content-end col-6">
+                        <b>{{ gasStation.fuelTypes[index].fuelType.name.toUpperCase() }}:</b>
+                    </p>
+                    <p class="row card-text justify-content-end col-6">
+                        <b>{{ gasStation.fuelTypes[index].price }}€</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+import { IGasStation } from "@/domain/IGasStation";
+@Options({
+    components: {},
+    // List all the external properties this component uses.
+    props: {
+        gasStation: Object,
+    },
+})
+export default class GasStation extends Vue {
+    gasStation!: IGasStation;
+}
+</script>
+<style scoped>
+.gasstation-card {
+    background-color: paleturquoise;
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+</style>
