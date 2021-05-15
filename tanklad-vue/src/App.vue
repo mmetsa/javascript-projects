@@ -99,4 +99,5 @@ export default class App extends Vue {
         font-size: 3.5rem;
     }
 }
+
 </style>
