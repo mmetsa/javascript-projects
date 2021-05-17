@@ -16,7 +16,7 @@
                 :key="index"
                 class="col-sm-12 col-md-12 col-lg-6 pb-3"
             >
-                <GasStation :gasStation="item" @update:favorite="updateFavorites" />
+                <GasStation :gasStation="item" :inFavorites="inFavorites(item)" @update:favorite="updateFavorites" @remove:favorite="removeFavorite" />
             </div>
         </div>
     </div>
@@ -38,6 +38,7 @@ export default class GasStations extends Vue {
     async mounted(): Promise<void> {
         await store.dispatch("loadGasStations");
         await store.dispatch('loadRetailers');
+        await store.dispatch('loadFavorites');
         this.gasStats = store.state.gasstations;
         console.log(store.state.gasstations);
     }
@@ -46,9 +47,28 @@ export default class GasStations extends Vue {
     retailer: string = "all";
     sort: string = "no-sort";
 
+    get favorites(): IGasStation[] | null {
+        return store.state.favorites;
+    }
+
+    inFavorites(gasStation: IGasStation): boolean {
+        console.log("am here")
+        if (this.favorites === null) {
+            return false;
+        }
+        return this.favorites.filter(e => e.id === gasStation.id).length > 0;
+    }
+
     updateFavorites(gasStation: IGasStation): void {
+        console.log("adding favs")
         if (!(store.state.favorites.filter(e => e.id === gasStation.id).length > 0)) {
             store.dispatch('addFavorite', gasStation);
+        }
+    }
+
+    removeFavorite(gasStation: IGasStation): void {
+        if (store.state.favorites.filter(e => e.id === gasStation.id).length > 0) {
+            store.dispatch('removeFavorite', gasStation);
         }
     }
 

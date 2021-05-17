@@ -5,6 +5,7 @@ import { IAppState } from "@/domain/IAppState";
 import { ILoginInfo } from "@/domain/ILoginInfo";
 import { IJwtResponse } from "@/domain/IJwtResponse";
 import { IRetailer } from "@/domain/IRetailer";
+import { IEditProfile } from "@/domain/IEditProfile";
 
 export const initialState: IAppState = {
     token: null,
@@ -39,8 +40,15 @@ export default createStore({
             state.favorites = favorites;
         },
         addFavorite: (state: IAppState, favorite: IGasStation) => {
-            console.log("here")
             state.favorites = [...state.favorites, favorite];
+        },
+        removeFavorite: (state: IAppState, favorite: IGasStation) => {
+            state.favorites = state.favorites.filter(x => x.id !== favorite.id);
+        },
+        editProfile: (state: IAppState, profile: IJwtResponse) => {
+            state.firstname = profile.firstname;
+            state.lastname = profile.lastname;
+            state.token = profile.token;
         }
     },
     actions: {
@@ -88,23 +96,45 @@ export default createStore({
             }
         },
         async loadFavorites(context) {
-            const response = await axios.get(
-                "https://localhost:5001/api/v1/gasstation/favorites",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + this.state.token
+            try {
+                const response = await axios.get(
+                    "https://localhost:5001/api/v1/gasstation/favorites",
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Bearer " + this.state.token
+                        }
                     }
+                );
+                if (response.status === 200) {
+                    context.commit("loadFavorites", response.data);
                 }
-            );
-            if (response.status === 200) {
-                context.commit("loadFavorites", response.data);
+            } catch (error) {
+                console.log(error);
             }
         },
         async addFavorite(context, gasStation: IGasStation) {
-            const response = await axios.post(
-                "https://localhost:5001/api/v1/gasstation/favorites",
-                JSON.stringify(gasStation),
+            try {
+                const response = await axios.post(
+                    "https://localhost:5001/api/v1/gasstation/favorites",
+                    JSON.stringify(gasStation),
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Bearer " + this.state.token
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    context.commit("addFavorite", response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async removeFavorite(context, gasStation: IGasStation) {
+            const response = await axios.delete(
+                "https://localhost:5001/api/v1/gasstation/favorites/" + gasStation.id,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -114,6 +144,25 @@ export default createStore({
             );
             if (response.status === 200) {
                 context.commit("addFavorite", response.data);
+            }
+        },
+        async editProfile(context, profile: IEditProfile) {
+            try {
+                const response = await axios.post(
+                    "https://localhost:5001/api/v1/account/updateuser",
+                    JSON.stringify(profile),
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Bearer " + this.state.token
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    context.commit("editProfile", response.data);
+                }
+            } catch (error) {
+                return error.response.data.messages;
             }
         },
     },

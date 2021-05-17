@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <div class="row justify-content-around">
+            <h1 v-if="!loading && (gasStations == null || gasStations.length == 0)">Oops! No Favorite Gas Stations yet!</h1>
             <div
                 v-for="(item, index) in gasStations"
                 :key="index"
@@ -20,14 +21,16 @@ import GasStation from "@/components/GasStation.vue";
 
 @Options({
     components: {
-        GasStation,
+        GasStation
     }
 })
 export default class Favorites extends Vue {
+    loading: boolean = false;
     async mounted(): Promise<void> {
+        this.loading = true;
         await store.dispatch("loadFavorites");
         this.gasStats = store.state.favorites;
-        console.log(store.state.favorites);
+        this.loading = false;
     }
 
     gasStats: IGasStation[] | null = null;

@@ -14,7 +14,8 @@
                         {{ gasStation.name.toUpperCase() }}
                     </div>
                     <div class="row col-1">
-                        <button @click="addFavorite(gasStation)" class="btn btn-outline-primary btn-sm">+</button>
+                        <button v-if="!inFavorites" @click="addFavorite(gasStation)" class="btn btn-outline-primary btn-sm">+</button>
+                        <button v-else @click="removeFavorite(gasStation)" class="btn btn-outline-primary btn-sm">-</button>
                     </div>
                 </h5>
                 <div class="row" v-for="(item, index) in gasStation.fuelTypes" :key="index">
@@ -38,13 +39,19 @@ import { IGasStation } from "@/domain/IGasStation";
     // List all the external properties this component uses.
     props: {
         gasStation: Object,
+        inFavorites: Boolean
     },
 })
 export default class GasStation extends Vue {
     gasStation!: IGasStation;
+    inFavorites!: boolean;
 
     addFavorite(gasStation: IGasStation): void {
         this.$emit('update:favorite', gasStation);
+    }
+
+    removeFavorite(gasStation: IGasStation): void {
+        this.$emit('remove:favorite', gasStation);
     }
 }
 </script>
