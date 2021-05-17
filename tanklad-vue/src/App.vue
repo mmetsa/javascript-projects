@@ -26,9 +26,11 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/gasstations">Gas Stations</router-link>
                 </li>
+                <!--
                 <li class="nav-item">
                     <router-link class="nav-link" to="/map">Map</router-link>
                 </li>
+                -->
                 <li class="nav-item">
                     <router-link class="nav-link" to="/about">About & Help</router-link>
                 </li>

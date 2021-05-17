@@ -6,6 +6,7 @@ import { ILoginInfo } from "@/domain/ILoginInfo";
 import { IJwtResponse } from "@/domain/IJwtResponse";
 import { IRetailer } from "@/domain/IRetailer";
 import { IEditProfile } from "@/domain/IEditProfile";
+import { IRegisterInfo } from "@/domain/IRegisterInfo";
 
 export const initialState: IAppState = {
     token: null,
@@ -54,45 +55,78 @@ export default createStore({
     actions: {
         async logIn(context, login: ILoginInfo) {
             const loginData = JSON.stringify(login);
-            const response = await axios.post(
-                "https://localhost:5001/api/v1/Account/login",
-                loginData,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
+            try {
+                const response = await axios.post(
+                    "https://localhost:5001/api/v1/Account/login",
+                    loginData,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
                     }
+                );
+                if (response.status === 200) {
+                    context.commit("logIn", response.data);
+                    return true;
                 }
-            );
-            if (response.status === 200) {
-                context.commit("logIn", response.data);
+            } catch (error) {
+                return error.response.data.messages;
+            }
+        },
+        async register(context, register: IRegisterInfo) {
+            const loginData = JSON.stringify(register);
+            try {
+                const response = await axios.post(
+                    "https://localhost:5001/api/v1/Account/register",
+                    loginData,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    context.commit("logIn", response.data);
+                    return true;
+                }
+            } catch (error) {
+                return error.response.data.messages;
             }
         },
         async loadGasStations(context) {
-            const response = await axios.get(
-                "https://localhost:5001/api/v1/gasstation/",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + this.state.token
+            try {
+                const response = await axios.get(
+                    "https://localhost:5001/api/v1/gasstation/",
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Bearer " + this.state.token
+                        }
                     }
+                );
+                if (response.status === 200) {
+                    context.commit("loadGasStations", response.data);
                 }
-            );
-            if (response.status === 200) {
-                context.commit("loadGasStations", response.data);
+            } catch (error) {
+                return error.message;
             }
         },
         async loadRetailers(context) {
-            const response = await axios.get(
-                "https://localhost:5001/api/v1/retailer/",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + this.state.token
+            try {
+                const response = await axios.get(
+                    "https://localhost:5001/api/v1/retailer/",
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Bearer " + this.state.token
+                        }
                     }
+                );
+                if (response.status === 200) {
+                    context.commit("loadRetailers", response.data);
                 }
-            );
-            if (response.status === 200) {
-                context.commit("loadRetailers", response.data);
+            } catch (error) {
+                return error.message;
             }
         },
         async loadFavorites(context) {
@@ -110,7 +144,7 @@ export default createStore({
                     context.commit("loadFavorites", response.data);
                 }
             } catch (error) {
-                console.log(error);
+                return error.message;
             }
         },
         async addFavorite(context, gasStation: IGasStation) {

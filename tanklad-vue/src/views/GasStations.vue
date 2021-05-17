@@ -1,5 +1,8 @@
 <template>
-    <div class="container">
+    <div v-if="loading" class="row justify-content-center">
+        <h1>Loading data...</h1>
+    </div>
+    <div v-if="!loading" class="container">
         <div class="row justify-content-center">
             <select name="retailer" @change="retailerChange()" v-model="retailer" class="form-select form-select-lg mb-3 col-3 mr-5 p-3">
                 <option selected value="all">Kõik tanklaketid</option>
@@ -40,8 +43,10 @@ export default class GasStations extends Vue {
         await store.dispatch('loadRetailers');
         await store.dispatch('loadFavorites');
         this.gasStats = store.state.gasstations;
-        console.log(store.state.gasstations);
+        this.loading = false;
     }
+
+    loading: boolean = true;
 
     gasStats: IGasStation[] | null = null;
     retailer: string = "all";
