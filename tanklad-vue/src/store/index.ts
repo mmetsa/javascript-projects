@@ -61,7 +61,7 @@ export default createStore({
                     loginData,
                     {
                         headers: {
-                            "Content-Type": "application/json",
+                            "Content-Type": "application/json"
                         }
                     }
                 );
@@ -81,7 +81,7 @@ export default createStore({
                     loginData,
                     {
                         headers: {
-                            "Content-Type": "application/json",
+                            "Content-Type": "application/json"
                         }
                     }
                 );
@@ -147,11 +147,12 @@ export default createStore({
                 return error.message;
             }
         },
-        async addFavorite(context, gasStation: IGasStation) {
+        async addFavorite(context, gasStationId: string) {
             try {
+                console.log(gasStationId);
                 const response = await axios.post(
                     "https://localhost:5001/api/v1/gasstation/favorites",
-                    JSON.stringify(gasStation),
+                    JSON.stringify(gasStationId),
                     {
                         headers: {
                             "Content-Type": "application/json",
@@ -163,12 +164,13 @@ export default createStore({
                     context.commit("addFavorite", response.data);
                 }
             } catch (error) {
-                console.log(error);
+                console.log(error.response.data);
             }
         },
-        async removeFavorite(context, gasStation: IGasStation) {
+        async removeFavorite(context, gasStation: string) {
             const response = await axios.delete(
-                "https://localhost:5001/api/v1/gasstation/favorites/" + gasStation.id,
+                "https://localhost:5001/api/v1/gasstation/favorites/" +
+                    gasStation,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -198,7 +200,7 @@ export default createStore({
             } catch (error) {
                 return error.response.data.messages;
             }
-        },
+        }
     },
     modules: {}
 });
