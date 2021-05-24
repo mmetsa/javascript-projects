@@ -10,24 +10,44 @@ import PageNotFound from "./containers/Page404";
 import GasStationDetails from "./containers/gasstations/GasStationDetails";
 import { AppContextProvider, initialState } from "./context/AppState";
 import { useState } from "react";
+import jwtDecode from "jwt-decode";
 
 function App() {
     const setAuthInfo = (
-        jwt: string,
+        jwt: string | null,
         firstName: string,
         lastName: string
     ): void => {
-        setAppState({ ...appState, jwt, firstName, lastName });
-        console.log("setauthinfo called");
+        console.log("app setauthinfo is called");
+        let user: any = jwtDecode(jwt ?? "");
+        let roles: string | null =
+            user[
+                "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ] ?? null;
+        setAppState({
+            ...appState,
+            jwt,
+            firstName,
+            lastName,
+            isAdmin: roles?.includes("Admin") ?? false,
+        });
     };
 
-    const [appState, setAppState] = useState({ ...initialState, setAuthInfo });
+    const setAdminStatus = (isAdmin: boolean) => {
+        setAppState({ ...appState, setAdminStatus });
+    };
+
+    const [appState, setAppState] = useState({
+        ...initialState,
+        setAuthInfo,
+        setAdminStatus,
+    });
 
     return (
         <>
             <AppContextProvider value={appState}>
                 <Header></Header>
-                <main role="main" className="pb-3">
+                <main id="main" role="main" className="pb-3">
                     <Switch>
                         <Route exact path="/" component={HomeIndex} />
                         <Route

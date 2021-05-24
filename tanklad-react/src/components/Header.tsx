@@ -5,6 +5,10 @@ import { AppContext } from "../context/AppState";
 const Header = () => {
     const appState = useContext(AppContext);
 
+    const resetState = () => {
+        appState.setAuthInfo("", "", "");
+    };
+
     return (
         <header>
             <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -29,13 +33,15 @@ const Header = () => {
                                     Home
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link
-                                    className="nav-link text-dark"
-                                    to="/FavoriteGasStations">
-                                    Favorites
-                                </Link>
-                            </li>
+                            {appState.jwt ? (
+                                <li className="nav-item">
+                                    <Link
+                                        className="nav-link text-dark"
+                                        to="/FavoriteGasStations">
+                                        Favorites
+                                    </Link>
+                                </li>
+                            ) : null}
                             <li className="nav-item">
                                 <Link
                                     className="nav-link text-dark"
@@ -43,37 +49,39 @@ const Header = () => {
                                     Gas Stations
                                 </Link>
                             </li>
-                            <li className="nav-item dropdown">
-                                <Link
-                                    className="nav-link dropdown-toggle text-dark"
-                                    to="#"
-                                    id="navbarDropdown"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Admin
-                                </Link>
-                                <div
-                                    className="dropdown-menu"
-                                    aria-labelledby="navbarDropdown">
+                            {appState.isAdmin ? (
+                                <li className="nav-item dropdown">
                                     <Link
-                                        className="nav-link text-dark"
-                                        to="/Admin/Users">
-                                        Users
+                                        className="nav-link dropdown-toggle text-dark"
+                                        to="#"
+                                        id="navbarDropdown"
+                                        role="button"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Admin
                                     </Link>
-                                    <Link
-                                        className="nav-link text-dark"
-                                        to="/Admin/Roles">
-                                        Roles
-                                    </Link>
-                                    <Link
-                                        className="nav-link text-dark"
-                                        to="/Admin/GasStations">
-                                        Gas Stations
-                                    </Link>
-                                </div>
-                            </li>
+                                    <div
+                                        className="dropdown-menu"
+                                        aria-labelledby="navbarDropdown">
+                                        <Link
+                                            className="nav-link text-dark"
+                                            to="/Admin/Users">
+                                            Users
+                                        </Link>
+                                        <Link
+                                            className="nav-link text-dark"
+                                            to="/Admin/Roles">
+                                            Roles
+                                        </Link>
+                                        <Link
+                                            className="nav-link text-dark"
+                                            to="/Admin/GasStations">
+                                            Gas Stations
+                                        </Link>
+                                    </div>
+                                </li>
+                            ) : null}
                         </ul>
                     </div>
                     <ul className="navbar-nav">
@@ -104,20 +112,42 @@ const Header = () => {
                         </div>
                     </li>
                     */}
-                        <li className="nav-item">
-                            <NavLink
-                                className="nav-link text-dark"
-                                to="/account/login">
-                                Login {appState.firstName}
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                className="nav-link text-dark"
-                                to="/account/register">
-                                Register
-                            </NavLink>
-                        </li>
+                        {appState.jwt != null ? (
+                            <>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link text-dark"
+                                        to="/account">
+                                        {appState.firstName} {appState.lastName}
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link text-dark"
+                                        to="/"
+                                        onClick={resetState}>
+                                        Log out
+                                    </NavLink>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link text-dark"
+                                        to="/account/login">
+                                        Login
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link text-dark"
+                                        to="/account/register">
+                                        Register
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </nav>
