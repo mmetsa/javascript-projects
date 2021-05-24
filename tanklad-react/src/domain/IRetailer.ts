@@ -10,4 +10,5 @@ export interface IRetailer {
     contactsCount: number;
     favoritesCount: number;
     gasStationsCount: number;
+    logoUrl: string | null;
 }

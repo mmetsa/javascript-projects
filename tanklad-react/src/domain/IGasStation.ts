@@ -1,5 +1,5 @@
 import { IContact } from "./IContact";
-import { IFuelType } from "./IFuelType";
+import { IFuelTypeInGasStation } from "./IFuelTypeInGasStation";
 import { IRetailer } from "./IRetailer";
 import { IService } from "./IService";
 
@@ -12,7 +12,7 @@ export interface IGasStation {
     openHours: string;
     retailerId: string;
     retailer: IRetailer;
-    fuelTypes: IFuelType[];
+    fuelTypes: IFuelTypeInGasStation[];
     contacts: IContact[];
     services: IService[];
 }

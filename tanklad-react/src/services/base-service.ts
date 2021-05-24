@@ -14,7 +14,9 @@ export abstract class BaseService {
     protected static getAxiosConfiguration(
         jwt?: string
     ): AxiosRequestConfig | undefined {
-        if (!jwt) return undefined;
+        if (!jwt) {
+            return undefined;
+        }
         const config: AxiosRequestConfig = {
             headers: {
                 Authorization: "Bearer " + jwt,
@@ -30,7 +32,7 @@ export abstract class BaseService {
         try {
             let response = await this.axios.get<TEntity[]>(
                 apiEndpoint,
-                BaseService.getAxiosConfiguration()
+                BaseService.getAxiosConfiguration(jwt)
             );
             return {
                 ok: response.status <= 299,
@@ -54,7 +56,7 @@ export abstract class BaseService {
         try {
             let response = await this.axios.get<TEntity>(
                 apiEndpoint,
-                BaseService.getAxiosConfiguration()
+                BaseService.getAxiosConfiguration(jwt)
             );
             return {
                 ok: response.status <= 299,
@@ -80,7 +82,31 @@ export abstract class BaseService {
             let response = await this.axios.post<TEntity>(
                 apiEndpoint,
                 JSON.stringify(payload),
-                BaseService.getAxiosConfiguration()
+                BaseService.getAxiosConfiguration(jwt)
+            );
+            return {
+                ok: response.status <= 299,
+                statusCode: response.status,
+                data: response.data,
+            };
+        } catch (error) {
+            let err = error as AxiosError;
+            return {
+                ok: false,
+                statusCode: err.response?.status ?? 500,
+                messages: (err.response?.data as IMessages).messages,
+            };
+        }
+    }
+
+    static async delete<TEntity>(
+        apiEndpoint: string,
+        jwt?: string
+    ): Promise<IFetchResponse<TEntity>> {
+        try {
+            let response = await this.axios.delete<TEntity>(
+                apiEndpoint,
+                BaseService.getAxiosConfiguration(jwt)
             );
             return {
                 ok: response.status <= 299,

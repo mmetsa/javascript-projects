@@ -11,6 +11,7 @@ import GasStationDetails from "./containers/gasstations/GasStationDetails";
 import { AppContextProvider, initialState } from "./context/AppState";
 import { useState } from "react";
 import jwtDecode from "jwt-decode";
+import FavoriteGasStations from "./containers/gasstations/FavoriteGasStations";
 
 function App() {
     const setAuthInfo = (
@@ -18,12 +19,15 @@ function App() {
         firstName: string,
         lastName: string
     ): void => {
-        console.log("app setauthinfo is called");
-        let user: any = jwtDecode(jwt ?? "");
-        let roles: string | null =
-            user[
-                "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-            ] ?? null;
+        let user: any = "";
+        let roles: string | null = null;
+        if (jwt) {
+            user = jwtDecode(jwt ?? "");
+            roles =
+                user[
+                    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                ] ?? null;
+        }
         setAppState({
             ...appState,
             jwt,
@@ -57,6 +61,10 @@ function App() {
                         <Route
                             path="/gasstations"
                             component={GasStationsIndex}
+                        />
+                        <Route
+                            path="/favoritegasstations"
+                            component={FavoriteGasStations}
                         />
                         <Route path="/account/login" component={Login} />
                         <Route path="/account/register" component={Register} />

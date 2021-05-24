@@ -6,7 +6,7 @@ const Header = () => {
     const appState = useContext(AppContext);
 
     const resetState = () => {
-        appState.setAuthInfo("", "", "");
+        appState.setAuthInfo(null, "", "");
     };
 
     return (

@@ -7,7 +7,7 @@ import { BaseService } from "../../services/base-service";
 import { EPageStatus } from "../../types/EPageStatus";
 import { IMessages } from "../../types/IMessages";
 
-const GasStationsIndex = () => {
+const FavoriteGasStations = () => {
     const [gasStations, setGasStations] = useState([] as IGasStation[]);
     const [pageStatus, setPageStatus] = useState({
         pageStatus: EPageStatus.Loading,
@@ -31,14 +31,20 @@ const GasStationsIndex = () => {
                 statusCode: result.statusCode,
             });
         }
-        if (appState.jwt) {
-            let favorites = await BaseService.getAll<string>(
-                "/account/favorites",
-                appState.jwt ?? ""
-            );
-            if (favorites.ok && favorites.data) {
-                setFavorites(favorites.data);
+
+        let favs = await BaseService.getAll<string>(
+            "/account/favorites",
+            appState.jwt ?? ""
+        );
+        if (favs.ok && favs.data) {
+            setFavorites(favs.data);
+            let gasStats: IGasStation[] = [];
+            for (let gasStation of result.data!) {
+                if (favs.data.includes(gasStation.id)) {
+                    gasStats.push(gasStation);
+                }
             }
+            setGasStations(gasStats);
         }
     };
 
@@ -70,6 +76,7 @@ const GasStationsIndex = () => {
         if (result.ok && result.data) {
             setMessages(result.data.messages);
             setFavorites(favorites.filter((f) => f !== id));
+            setGasStations(gasStations.filter((f) => f.id !== id));
         } else {
             if (result.statusCode === 401) {
                 setMessages(["Please log in first!"]);
@@ -85,7 +92,7 @@ const GasStationsIndex = () => {
     }, []);
     return (
         <>
-            <h1 className="mb-5">Gas Stations</h1>
+            <h1 className="mb-5">Favorite Gas Stations</h1>
             {messages?.map((item, key) => {
                 return (
                     <div className="row justify-content-center" key={key}>
@@ -118,4 +125,4 @@ const GasStationsIndex = () => {
     );
 };
 
-export default GasStationsIndex;
+export default FavoriteGasStations;
