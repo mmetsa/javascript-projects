@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import GasStation from "../../components/GasStation";
 import Loader from "../../components/Loader";
 import { AppContext } from "../../context/AppState";
+import { ICustomerCard } from "../../domain/ICustomerCard";
 import { IGasStation } from "../../domain/IGasStation";
 import { BaseService } from "../../services/base-service";
 import { EPageStatus } from "../../types/EPageStatus";
@@ -15,9 +16,7 @@ const GasStationsIndex = () => {
     });
 
     const appState = useContext(AppContext);
-
     const [messages, setMessages] = useState<string[] | null>();
-
     const [favorites, setFavorites] = useState([] as string[]);
 
     const loadData = async () => {
@@ -38,6 +37,14 @@ const GasStationsIndex = () => {
             );
             if (favorites.ok && favorites.data) {
                 setFavorites(favorites.data);
+            }
+
+            let discounts = await BaseService.getAll<ICustomerCard>(
+                "/account/getusercustomercards",
+                appState.jwt ?? ""
+            );
+            if (discounts.ok && discounts.data) {
+                appState.discounts = discounts.data;
             }
         }
     };

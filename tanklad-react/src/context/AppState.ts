@@ -1,10 +1,12 @@
 import React from "react";
+import { ICustomerCard } from "../domain/ICustomerCard";
 
 export interface IAppState {
     jwt: string | null;
     firstName: string;
     lastName: string;
     isAdmin: boolean;
+    discounts: ICustomerCard[];
 
     setAuthInfo: (
         jwt: string | null,
@@ -19,6 +21,7 @@ export const initialState: IAppState = {
     firstName: "",
     lastName: "",
     isAdmin: false,
+    discounts: [],
 
     setAuthInfo: (): void => {},
     setAdminStatus: (): void => {},

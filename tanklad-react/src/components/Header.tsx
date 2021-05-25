@@ -49,39 +49,6 @@ const Header = () => {
                                     Gas Stations
                                 </Link>
                             </li>
-                            {appState.isAdmin ? (
-                                <li className="nav-item dropdown">
-                                    <Link
-                                        className="nav-link dropdown-toggle text-dark"
-                                        to="#"
-                                        id="navbarDropdown"
-                                        role="button"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Admin
-                                    </Link>
-                                    <div
-                                        className="dropdown-menu"
-                                        aria-labelledby="navbarDropdown">
-                                        <Link
-                                            className="nav-link text-dark"
-                                            to="/Admin/Users">
-                                            Users
-                                        </Link>
-                                        <Link
-                                            className="nav-link text-dark"
-                                            to="/Admin/Roles">
-                                            Roles
-                                        </Link>
-                                        <Link
-                                            className="nav-link text-dark"
-                                            to="/Admin/GasStations">
-                                            Gas Stations
-                                        </Link>
-                                    </div>
-                                </li>
-                            ) : null}
                         </ul>
                     </div>
                     <ul className="navbar-nav">
@@ -114,12 +81,31 @@ const Header = () => {
                     */}
                         {appState.jwt != null ? (
                             <>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link text-dark"
-                                        to="/account">
+                                <li className="nav-item dropdown">
+                                    <Link
+                                        className="nav-link dropdown-toggle text-dark"
+                                        to="#"
+                                        id="navbarDropdown"
+                                        role="button"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
                                         {appState.firstName} {appState.lastName}
-                                    </NavLink>
+                                    </Link>
+                                    <div
+                                        className="dropdown-menu"
+                                        aria-labelledby="navbarDropdown">
+                                        <Link
+                                            className="nav-link text-dark"
+                                            to="/account">
+                                            Profile
+                                        </Link>
+                                        <Link
+                                            className="nav-link text-dark"
+                                            to="/account/cards">
+                                            My discount cards
+                                        </Link>
+                                    </div>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink

@@ -3,4 +3,5 @@ export interface ICustomerCard {
     description: string | null;
     id: string;
     discount: number;
+    retailerId: string;
 }

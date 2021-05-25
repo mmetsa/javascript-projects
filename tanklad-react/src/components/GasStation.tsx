@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppState";
+import { IFuelTypeInGasStation } from "../domain/IFuelTypeInGasStation";
 import { IGasStation } from "../domain/IGasStation";
 
 const Logo = (props: any) => {
@@ -28,6 +29,44 @@ const Logo = (props: any) => {
     }
 };
 
+const Price = (props: {
+    gasStation: IGasStation;
+    fuelType: IFuelTypeInGasStation;
+}) => {
+    const appState = useContext(AppContext);
+    let discount = appState.discounts.find(
+        (e) => e.retailerId === props.gasStation.retailerId
+    );
+    if (discount) {
+        return (
+            <>
+                <p className="row card-text justify-content-end col-6">
+                    <b>{props.fuelType.fuelType.name}</b>
+                </p>
+                <p className="row card-text justify-content-end col-6">
+                    <b>
+                        {(
+                            props.fuelType.price -
+                            discount.discount / 100
+                        ).toFixed(3)}{" "}
+                        €
+                    </b>
+                </p>
+            </>
+        );
+    }
+    return (
+        <>
+            <p className="row card-text justify-content-end col-6">
+                <b>{props.fuelType.fuelType.name}</b>
+            </p>
+            <p className="row card-text justify-content-end col-6">
+                <b>{props.fuelType.price} €</b>
+            </p>
+        </>
+    );
+};
+
 const GasStation = (props: {
     gasStation: IGasStation;
     addToFavorites: any;
@@ -47,65 +86,63 @@ const GasStation = (props: {
     };
 
     return (
-        <>
-            <div
-                className="card h-100 gasstation-card"
-                onClick={() => showDetails(props.gasStation.id)}>
-                <div className="card-body row">
-                    <Logo url={props.gasStation.retailer.logoUrl} />
-                    <div className="h-100 col-7">
-                        <h5 className="row card-title justify-content-center">
-                            <div className="row col-11 justify-content-center">
-                                {props.gasStation.name}
+        <div
+            className="card h-100 gasstation-card"
+            onClick={() => showDetails(props.gasStation.id)}>
+            <div className="card-body row">
+                <Logo url={props.gasStation.retailer.logoUrl} />
+                <div className="h-100 col-7">
+                    <h5 className="row card-title justify-content-center">
+                        <div className="row col-11 justify-content-center">
+                            {props.gasStation.name}
+                        </div>
+                        <div className="row col-1">
+                            {appState.jwt
+                                ? [
+                                      !isFavorite(props.gasStation) ? (
+                                          <button
+                                              onClick={(e) =>
+                                                  props.addToFavorites(
+                                                      e,
+                                                      props.gasStation.id
+                                                  )
+                                              }
+                                              title="Add as favorite"
+                                              className="rounded-circle btn btn-primary btn-sm my-auto">
+                                              +
+                                          </button>
+                                      ) : (
+                                          <button
+                                              onClick={(e) =>
+                                                  props.removeFromFavorites(
+                                                      e,
+                                                      props.gasStation.id
+                                                  )
+                                              }
+                                              title="Remove from favorites"
+                                              className="rounded-circle btn btn-danger btn-sm my-auto">
+                                              -
+                                          </button>
+                                      ),
+                                  ]
+                                : null}
+                        </div>
+                    </h5>
+                    {props.gasStation.fuelTypes.map((item, key) => {
+                        return (
+                            <div className="row" key={key}>
+                                <Price
+                                    {...{
+                                        gasStation: props.gasStation,
+                                        fuelType: item,
+                                    }}
+                                />
                             </div>
-                            <div className="row col-1">
-                                {appState.jwt
-                                    ? [
-                                          !isFavorite(props.gasStation) ? (
-                                              <button
-                                                  onClick={(e) =>
-                                                      props.addToFavorites(
-                                                          e,
-                                                          props.gasStation.id
-                                                      )
-                                                  }
-                                                  title="Add as favorite"
-                                                  className="rounded-circle btn btn-primary btn-sm my-auto">
-                                                  +
-                                              </button>
-                                          ) : (
-                                              <button
-                                                  onClick={(e) =>
-                                                      props.removeFromFavorites(
-                                                          e,
-                                                          props.gasStation.id
-                                                      )
-                                                  }
-                                                  title="Remove from favorites"
-                                                  className="rounded-circle btn btn-danger btn-sm my-auto">
-                                                  -
-                                              </button>
-                                          ),
-                                      ]
-                                    : null}
-                            </div>
-                        </h5>
-                        {props.gasStation.fuelTypes.map((item, key) => {
-                            return (
-                                <div className="row" key={key}>
-                                    <p className="row card-text justify-content-end col-6">
-                                        <b>{item.fuelType.name}</b>
-                                    </p>
-                                    <p className="row card-text justify-content-end col-6">
-                                        <b>{item.price} €</b>
-                                    </p>
-                                </div>
-                            );
-                        })}
-                    </div>
+                        );
+                    })}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

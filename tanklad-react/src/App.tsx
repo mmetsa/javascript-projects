@@ -12,8 +12,14 @@ import { AppContextProvider, initialState } from "./context/AppState";
 import { useState } from "react";
 import jwtDecode from "jwt-decode";
 import FavoriteGasStations from "./containers/gasstations/FavoriteGasStations";
+import Profile from "./containers/account/Profile";
+import Discounts from "./containers/account/Discounts";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 
 function App() {
+    library.add(fab);
     const setAuthInfo = (
         jwt: string | null,
         firstName: string,
@@ -68,7 +74,8 @@ function App() {
                         />
                         <Route path="/account/login" component={Login} />
                         <Route path="/account/register" component={Register} />
-
+                        <Route path="/account/cards" component={Discounts} />
+                        <Route path="/account" component={Profile} />
                         <Route component={PageNotFound} />
                     </Switch>
                 </main>
