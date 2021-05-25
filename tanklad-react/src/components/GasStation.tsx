@@ -34,9 +34,12 @@ const Price = (props: {
     fuelType: IFuelTypeInGasStation;
 }) => {
     const appState = useContext(AppContext);
-    let discount = appState.discounts.find(
-        (e) => e.retailerId === props.gasStation.retailerId
-    );
+    let discount = null;
+    if (appState.discounts) {
+        discount = appState.discounts.find(
+            (e) => e.retailerId === props.gasStation.retailerId
+        );
+    }
     if (discount) {
         return (
             <>
