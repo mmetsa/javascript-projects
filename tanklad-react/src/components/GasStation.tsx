@@ -135,6 +135,7 @@ const GasStation = (props: {
                         return (
                             <div className="row" key={key}>
                                 <Price
+                                    key={key}
                                     {...{
                                         gasStation: props.gasStation,
                                         fuelType: item,

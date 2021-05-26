@@ -10,7 +10,7 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 ReactDOM.render(
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
         <React.StrictMode>
             <div className="container">
                 <App></App>

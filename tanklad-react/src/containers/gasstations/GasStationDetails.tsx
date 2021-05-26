@@ -84,7 +84,7 @@ const GasStationDetails = () => {
                                         return (
                                             <tr key={index}>
                                                 <td className="text-center">
-                                                    {item.name}
+                                                    {item.service.name}
                                                 </td>
                                             </tr>
                                         );
