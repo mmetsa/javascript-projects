@@ -52,12 +52,16 @@ const Price = (props: {
             (x) => x.fuelTypeId === props.fuelType.fuelTypeId
         )!.price = editingPrice;
         let response = await BaseService.put(
-            "/gasstation/" + props.gasStation.id,
-            props.gasStation,
+            "/gasstation/updatePrice/" + props.gasStation.id,
+            {
+                fuelTypeId: props.fuelType.fuelType.id,
+                price: editingPrice,
+            },
             appState.jwt ?? ""
         );
         if (!response.ok) {
-            window.location.reload();
+            console.log(response);
+            //window.location.reload();
         }
     };
 
