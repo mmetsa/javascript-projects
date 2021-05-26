@@ -99,6 +99,32 @@ export abstract class BaseService {
         }
     }
 
+    static async put<TEntity>(
+        apiEndpoint: string,
+        payload: any,
+        jwt?: string
+    ): Promise<IFetchResponse<TEntity>> {
+        try {
+            let response = await this.axios.put<TEntity>(
+                apiEndpoint,
+                JSON.stringify(payload),
+                BaseService.getAxiosConfiguration(jwt)
+            );
+            return {
+                ok: response.status <= 299,
+                statusCode: response.status,
+                data: response.data,
+            };
+        } catch (error) {
+            let err = error as AxiosError;
+            return {
+                ok: false,
+                statusCode: err.response?.status ?? 500,
+                messages: (err.response?.data as IMessages).messages,
+            };
+        }
+    }
+
     static async delete<TEntity>(
         apiEndpoint: string,
         jwt?: string

@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppState";
 import { IFuelTypeInGasStation } from "../domain/IFuelTypeInGasStation";
 import { IGasStation } from "../domain/IGasStation";
+import { BaseService } from "../services/base-service";
 
 const Logo = (props: any) => {
     if (props.url) {
@@ -34,6 +35,32 @@ const Price = (props: {
     fuelType: IFuelTypeInGasStation;
 }) => {
     const appState = useContext(AppContext);
+
+    const [editing, setEditing] = useState(false);
+    const [editingPrice, setEditingPrice] = useState(0);
+
+    const editPrice = async (e: any) => {
+        e.stopPropagation();
+        setEditing(true);
+        console.log("Editing price");
+    };
+
+    const savePrice = async (e: any) => {
+        e.stopPropagation();
+        setEditing(false);
+        props.gasStation.fuelTypes.find(
+            (x) => x.fuelTypeId === props.fuelType.fuelTypeId
+        )!.price = editingPrice;
+        let response = await BaseService.put(
+            "/gasstation/" + props.gasStation.id,
+            props.gasStation,
+            appState.jwt ?? ""
+        );
+        if (!response.ok) {
+            window.location.reload();
+        }
+    };
+
     let discount = null;
     if (appState.discounts) {
         discount = appState.discounts.find(
@@ -46,15 +73,44 @@ const Price = (props: {
                 <p className="row card-text justify-content-end col-6">
                     <b>{props.fuelType.fuelType.name}</b>
                 </p>
-                <p className="row card-text justify-content-end col-6">
-                    <b>
-                        {(
-                            props.fuelType.price -
-                            discount.discount / 100
-                        ).toFixed(3)}{" "}
-                        €
-                    </b>
-                </p>
+                {editing && (
+                    <>
+                        <input
+                            className="ml-1 row col-4"
+                            type="number"
+                            step={0.1}
+                            placeholder="Set price"
+                            value={editingPrice}
+                            onChange={(e) =>
+                                setEditingPrice(e.target.valueAsNumber)
+                            }
+                            onClick={(e) => e.stopPropagation()}></input>
+
+                        <button
+                            className="pl-5 btn btn-link m-0 p-0"
+                            onClick={(e) => savePrice(e)}>
+                            Save
+                        </button>
+                    </>
+                )}
+                {!editing && (
+                    <>
+                        <p className="row card-text justify-content-end col-6">
+                            <b>
+                                {(
+                                    props.fuelType.price -
+                                    discount.discount / 100
+                                ).toFixed(3)}{" "}
+                                €
+                            </b>
+                        </p>
+                        <a
+                            className="pl-2 btn btn-link m-0 p-0"
+                            onClick={(e) => editPrice(e)}>
+                            Edit
+                        </a>
+                    </>
+                )}
             </>
         );
     }
@@ -63,9 +119,45 @@ const Price = (props: {
             <p className="row card-text justify-content-end col-6">
                 <b>{props.fuelType.fuelType.name}</b>
             </p>
-            <p className="row card-text justify-content-end col-6">
-                <b>{props.fuelType.price} €</b>
-            </p>
+            {editing && (
+                <>
+                    <input
+                        className="ml-1 row col-4"
+                        type="number"
+                        step={0.1}
+                        placeholder="Set price"
+                        value={editingPrice}
+                        onChange={(e) =>
+                            setEditingPrice(e.target.valueAsNumber)
+                        }
+                        onClick={(e) => e.stopPropagation()}></input>
+
+                    <button
+                        className="pl-5 btn btn-link m-0 p-0"
+                        onClick={(e) => savePrice(e)}>
+                        Save
+                    </button>
+                </>
+            )}
+            {!editing && appState.jwt !== null && (
+                <>
+                    <p className="row card-text justify-content-end col-6">
+                        <b>{props.fuelType.price} €</b>
+                    </p>
+                    <a
+                        className="pl-2 btn btn-link m-0 p-0"
+                        onClick={(e) => editPrice(e)}>
+                        Edit
+                    </a>
+                </>
+            )}
+            {!editing && appState.jwt == null && (
+                <>
+                    <p className="row card-text justify-content-end col-6">
+                        <b>{props.fuelType.price} €</b>
+                    </p>
+                </>
+            )}
         </>
     );
 };
@@ -131,11 +223,10 @@ const GasStation = (props: {
                                 : null}
                         </div>
                     </h5>
-                    {props.gasStation.fuelTypes.map((item, key) => {
+                    {props.gasStation.fuelTypes.map((item, index) => {
                         return (
-                            <div className="row" key={key}>
+                            <div className="row" key={index}>
                                 <Price
-                                    key={key}
                                     {...{
                                         gasStation: props.gasStation,
                                         fuelType: item,

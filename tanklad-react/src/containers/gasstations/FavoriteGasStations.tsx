@@ -93,9 +93,9 @@ const FavoriteGasStations = () => {
     return (
         <>
             <h1 className="mb-5">Favorite Gas Stations</h1>
-            {messages?.map((item, key) => {
+            {messages?.map((item, index) => {
                 return (
-                    <div className="row justify-content-center" key={key}>
+                    <div className="row justify-content-center" key={index}>
                         <div className="alert alert-info" role="alert">
                             {item}
                         </div>
@@ -103,11 +103,11 @@ const FavoriteGasStations = () => {
                 );
             })}
             <div className="row justify-content-around">
-                {gasStations.map((item, key) => {
+                {gasStations.map((item, index) => {
                     return (
                         <div
                             className="col-sm-12 col-md-12 col-lg-6 pb-3 gasstation-parent"
-                            key={key}>
+                            key={index}>
                             <GasStation
                                 {...{
                                     gasStation: item,
