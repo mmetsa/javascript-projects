@@ -1,58 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { IRetailer } from "../../domain/IRetailer";
+import { BaseService } from "../../services/base-service";
 
 const HomeIndex = () => {
+    const [retailers, setRetailers] = useState([] as IRetailer[]);
+    const loadData = async () => {
+        let retailersResponse = await BaseService.getAll<IRetailer>(
+            "/retailer",
+            ""
+        );
+        if (retailersResponse.ok && retailersResponse.data) {
+            setRetailers(retailersResponse.data);
+        }
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
     return (
         <>
             <div className="row justify-content-center mt-3">
                 <h1>Welcome to the Estonian gas stations web page!</h1>
                 <h3>Find gas station information for these retailers</h3>
             </div>
-
-            <div className="row justify-content-around mt-5">
-                <div className="col-sm-12 col-md-6 col-lg-4 align-items-center">
-                    <img
-                        src="https://ehl.org.ee/wp-content/uploads/2018/10/Olerex-logo.jpg"
-                        alt="Olerex"
-                        style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            objectFit: "contain",
-                        }}
-                    />
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-4 align-items-center">
-                    <img
-                        src="https://seeklogo.com/images/A/alexela-logo-D0EC116C33-seeklogo.com.png"
-                        alt="Alexela"
-                        style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            objectFit: "contain",
-                        }}
-                    />
-                </div>
-                <div className="d-flex col-sm-12 col-md-6 col-lg-4 align-items-center">
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Circle_K_logo_2016.svg/1200px-Circle_K_logo_2016.svg.png"
-                        alt="CirkleK"
-                        style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            objectFit: "contain",
-                        }}
-                    />
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-4 align-items-center">
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Neste_logo.png"
-                        alt="Neste"
-                        style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            objectFit: "contain",
-                        }}
-                    />
-                </div>
+            <div className="row mt-5">
+                {retailers.map((item, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className="col-sm-12 col-md-6 col-lg-4 align-items-center">
+                            <img
+                                src={item.logoUrl ?? ""}
+                                alt="Logo"
+                                style={{
+                                    maxWidth: "100%",
+                                    maxHeight: "100%",
+                                    objectFit: "contain",
+                                }}
+                            />
+                        </div>
+                    );
+                })}
             </div>
         </>
     );

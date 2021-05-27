@@ -108,11 +108,11 @@ const Price = (props: {
                                 €
                             </b>
                         </p>
-                        <a
-                            className="pl-2 btn btn-link m-0 p-0"
+                        <button
+                            className="pl-2 btn btn-link m-0 p-0 h-50"
                             onClick={(e) => editPrice(e)}>
                             Edit
-                        </a>
+                        </button>
                     </>
                 )}
             </>
@@ -148,11 +148,11 @@ const Price = (props: {
                     <p className="row card-text justify-content-end col-6">
                         <b>{props.fuelType.price} €</b>
                     </p>
-                    <a
-                        className="pl-2 btn btn-link m-0 p-0"
+                    <button
+                        className="pl-2 btn btn-link m-0 p-0 h-50"
                         onClick={(e) => editPrice(e)}>
                         Edit
-                    </a>
+                    </button>
                 </>
             )}
             {!editing && appState.jwt == null && (

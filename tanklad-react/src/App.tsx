@@ -44,7 +44,7 @@ function App() {
     };
 
     const setAdminStatus = (isAdmin: boolean) => {
-        setAppState({ ...appState, setAdminStatus });
+        setAppState({ ...appState, isAdmin });
     };
 
     const [appState, setAppState] = useState({

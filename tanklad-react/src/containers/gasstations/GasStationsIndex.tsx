@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import GasStation from "../../components/GasStation";
 import Loader from "../../components/Loader";
+import Search from "../../components/Search";
 import { AppContext } from "../../context/AppState";
 import { ICustomerCard } from "../../domain/ICustomerCard";
 import { IGasStation } from "../../domain/IGasStation";
@@ -114,6 +115,18 @@ const GasStationsIndex = () => {
         );
     };
 
+    const handleSearch = (e: any) => {
+        setTimeout(
+            () =>
+                setShownGasStations(
+                    gasStations.filter((g) =>
+                        g.name.toLowerCase().includes(e.target.value)
+                    )
+                ),
+            500
+        );
+    };
+
     const handleSorting = (e: any) => {
         if (e.target.value === "none") {
             setShownGasStations(gasStations);
@@ -142,10 +155,13 @@ const GasStationsIndex = () => {
     return (
         <>
             <h1 className="mb-5">Gas Stations</h1>
-            <div className="row justify-content-center">
+            <div className="row justify-content-center pb-5">
+                <div className="col-sm-8 col-md-4 col-lg-3 m-1">
+                    <Search {...{ onChange: handleSearch }} />
+                </div>
                 <select
                     name="retailer"
-                    className="form-select form-select-lg mb-3 col-3 mr-5 p-3"
+                    className="col-sm-8 col-md-4 col-lg-3 mr-5 m-1"
                     onChange={(e) => handleFilter(e)}>
                     <option value="all">Kõik tanklaketid</option>
                     {retailers.map((item, index) => {
@@ -158,7 +174,7 @@ const GasStationsIndex = () => {
                 </select>
                 <select
                     id="sort"
-                    className="form-select form-select-lg mb-3 col-2 p-3"
+                    className="col-sm-8 col-md-4 col-lg-3 m-1"
                     onChange={(e) => handleSorting(e)}>
                     <option value="none">Sorteeri</option>
                     <option value="price-growing">
