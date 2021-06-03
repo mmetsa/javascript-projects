@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppState";
 import { IUserHomework } from "../../domain/IUserHomework";
 import { BaseService } from "../../services/base-service";
@@ -10,7 +10,6 @@ const TeacherShowHomeworks = () => {
 
     const [homeworks, setHomeworks] = useState<IUserHomework[]>([]);
     const appState = useContext(AppContext);
-    const history = useHistory();
     const [grade, setGrade] = useState(0);
 
     const loadData = async () => {

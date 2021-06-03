@@ -19,6 +19,8 @@ import TeacherSubjectsCreate from "./containers/teacher/TeacherSubjectsCreate";
 import TeacherAddHomework from "./containers/teacher/TeacherAddHomework";
 import TeacherShowHomeworks from "./containers/teacher/TeacherShowHomeworks";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+
 function App() {
     const setAuthInfo = (
         jwt: string | null,

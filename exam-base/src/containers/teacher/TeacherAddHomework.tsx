@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppState";
-import { IHomework } from "../../domain/IHomework";
 import { ISubject } from "../../domain/ISubject";
-import { IUserHomework } from "../../domain/IUserHomework";
 import { BaseService } from "../../services/base-service";
 import { IMessages } from "../../types/IMessages";
 
 const TeacherAddHomework = () => {
     const { id } = useParams() as { id: string };
-
-    const [homeworks, setHomeworks] = useState<IUserHomework[]>([]);
     const appState = useContext(AppContext);
     const history = useHistory();
 

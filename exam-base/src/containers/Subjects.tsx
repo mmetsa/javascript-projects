@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Search from "../components/Search";
 import { AppContext } from "../context/AppState";
 import { ISubject } from "../domain/ISubject";
 import { IUserSubject } from "../domain/IUserSubject";
@@ -6,6 +7,7 @@ import { BaseService } from "../services/base-service";
 
 const Subjects = () => {
     const [subjects, setSubjects] = useState<ISubject[]>();
+    const [shownSubjects, setShownSubjects] = useState<ISubject[]>();
     const [userSubjects, setUserSubjects] = useState<IUserSubject[]>();
     const appState = useContext(AppContext);
 
@@ -16,6 +18,7 @@ const Subjects = () => {
         );
         if (result.ok && result.data) {
             setSubjects(result.data);
+            setShownSubjects(result.data);
         }
 
         let res = await BaseService.getAll<IUserSubject>(
@@ -33,6 +36,14 @@ const Subjects = () => {
         loadData();
     };
 
+    const onSearch = (e: any) => {
+        setShownSubjects(
+            subjects?.filter((x) =>
+                x.name.toLowerCase().includes(e.target.value)
+            )
+        );
+    };
+
     useEffect(() => {
         loadData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,6 +53,11 @@ const Subjects = () => {
         <>
             <div className="row justify-content-center mt-3">
                 <h1>Our courses</h1>
+            </div>
+            <div className="row justify-content-center mt-3">
+                <div className="col-md-6 col-sm-12">
+                    <Search {...{ onChange: onSearch }} />
+                </div>
             </div>
             <div className="row justify-content-center mt-3">
                 <table className="table col-md-6 col-sm-12">
@@ -55,7 +71,7 @@ const Subjects = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {subjects?.map((item, index) => {
+                        {shownSubjects?.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.teacherName}</td>
