@@ -14,7 +14,7 @@ const Header = () => {
             <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div className="container">
                     <Link className="navbar-brand" to="/">
-                        TANKLAD.EE
+                        StudySystem
                     </Link>
                     <button
                         className="navbar-toggler"
@@ -33,22 +33,42 @@ const Header = () => {
                                     Home
                                 </Link>
                             </li>
-                            {appState.jwt ? (
-                                <li className="nav-item">
-                                    <Link
-                                        className="nav-link text-dark"
-                                        to="/FavoriteGasStations">
-                                        Favorites
-                                    </Link>
-                                </li>
-                            ) : null}
                             <li className="nav-item">
                                 <Link
                                     className="nav-link text-dark"
-                                    to="/GasStations">
-                                    Gas Stations
+                                    to="/Subjects">
+                                    All Subjects
                                 </Link>
                             </li>
+                            {appState.role === "Admin" && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link
+                                            className="nav-link text-dark"
+                                            to="/Admin/Homeworks">
+                                            Homeworks
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
+                            {appState.role === "Teacher" && (
+                                <li className="nav-item">
+                                    <Link
+                                        className="nav-link text-dark"
+                                        to="/teacher/subjects">
+                                        My subjects
+                                    </Link>
+                                </li>
+                            )}
+                            {appState.role === "Student" && (
+                                <li className="nav-item">
+                                    <Link
+                                        className="nav-link text-dark"
+                                        to="/student/subjects">
+                                        My subjects
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                     </div>
                     <ul className="navbar-nav">
@@ -73,18 +93,13 @@ const Header = () => {
                                             to="/account">
                                             Profile
                                         </Link>
-                                        <Link
-                                            className="nav-link text-dark"
-                                            to="/account/cards">
-                                            My discount cards
-                                        </Link>
                                     </div>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink
                                         className="nav-link text-dark"
                                         to="/"
-                                        onClick={resetState}>
+                                        onClick={() => resetState()}>
                                         Log out
                                     </NavLink>
                                 </li>
