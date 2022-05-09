@@ -1,5 +1,7 @@
-# Javascript course project folder
+# Monorepo for different JS projects I have done
 
-## Maiko Metsalu - IADB185064
+## I, Maiko Metsalu, am the only author of all code written in this repository
 
-## Docker image hosted on https://mmetsa-jsapps.azurewebsites.net/
+Feel free to ask me any questions about the code I have written
+
+## Docker image not currently hosted
